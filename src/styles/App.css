@@ -1,0 +1,75 @@
+.App {
+    text-align: center;
+    
+}
+
+.App-logo {
+    height: 40vmin;
+}
+
+.App-header {
+    background-color: #282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
+}
+
+.App-link {
+    color: #09d3ac;
+}
+
+#head {
+    background-color: #09d3ac;
+    box-shadow: 1px 5px #888888;
+    height: 50px;
+    width:auto;
+    padding-top: 3px;
+}
+
+#table {
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+label {
+    margin-left: 130px;
+}
+.p-button-size{
+    width:100%;
+}
+.p-button-text{
+    
+    color:rgb(7, 7, 7);
+    font-family: cursive;
+    -webkit-backdrop-filter: blur();
+    /* -webkit-filter: drop-shadow(); */
+}
+.plr-10{
+    padding-left:10%;
+    padding-right: 10%;
+}
+
+.add-card {
+    width: 90%;
+    margin: auto;
+}
+.wt-100{
+    width: 100%;
+}
+InputText {
+    background: transparent !important;
+    border: none !important;
+}
+.input {
+    width: 100%;
+}
+.space{
+    margin-left: 20px;
+}
+
+
+  
