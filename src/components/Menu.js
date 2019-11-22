@@ -58,6 +58,10 @@ async onPatientSelect(e){
     
     
 }
+dialogAlert =()=>{
+    alert("rdgtrth== ",this.state.id)
+}
+
   onClick = () => {
     this.setState({ visible: true });
   };
@@ -120,8 +124,9 @@ async onPatientSelect(e){
                             <h1>my id {this.state.id}</h1>
                         </div>
                      
-                        <Dialog visible={this.state.displayDialog} width="300px" header="Car Details" modal={true} footer={dialogFooter} onHide={() => this.setState({ displayDialog: false })}>
-                           <p>;ofksdlf</p>
+                        <Dialog visible={this.state.displayDialog} width="300px" header="Car Details" modal={true}  onHide={() => this.setState({ displayDialog: false })}>
+                           <p>id: {this.state.id}</p>
+                           <button onClick ={this.dialogAlert}>Edit</button> <button>Delete</button>
                          
                         </Dialog>
                       
