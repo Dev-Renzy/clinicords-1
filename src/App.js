@@ -7,6 +7,8 @@ import "primeflex/primeflex.css";
 import Menu from "./components/Menu";
 import Login from "./components/Login.component";
 import AddPatients from "./components/AddPatients";
+import Record from "./components/Records";
+
 import { BrowserRouter as Router,Switch,Link,Route, } from "react-router-dom";
 export default function App() {
   return (
@@ -16,6 +18,8 @@ export default function App() {
           <Route exact path="/" component={Login}/>
           <Route path="/home" component={Menu}/>
           <Route path="/add" component={AddPatients}/>
+          <Route path="/records" component={Record}/>
+
           </Switch>
         </div>
       </Router>  

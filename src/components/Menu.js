@@ -12,6 +12,7 @@ import AddPatients from "./AddPatients";
 import req from "../helper/api"
 
 import { BrowserRouter as Router, Switch, Link, Route } from "react-router-dom";
+import Records from "./Records";
 
 export default class Menu extends Component {
   constructor() {
@@ -20,6 +21,8 @@ export default class Menu extends Component {
         patients: [],
         myPatient: null,
         id: null,
+        // toRecord:false,
+        edit:false
         
     };
 
@@ -56,10 +59,10 @@ async onPatientSelect(e){
     
     await this.setState({displayDialog: true,id: e.data.id});
     
-    
 }
 dialogAlert =()=>{
-    alert("rdgtrth== ",this.state.id)
+    // alert("rdgtrth== ",this.state.id)
+    return <Records/>
 }
 
   onClick = () => {
@@ -68,7 +71,15 @@ dialogAlert =()=>{
   onHide = () => {
     this.setState({ visible: false });
   };
+
+ 
   render() {
+    // if (this.state.toRecord === true) {
+    //   return <Redirect to="/records" />;
+    // }
+    if(this.state.edit === true){
+      return <Records/>
+    }
     let header = <div className="p-clearfix" style={{ lineHeight: '1.87em' }}>Current Patients </div>;
     let dialogFooter = <div className="ui-dialog-buttonpane p-clearfix">
         <Button label="Delete" icon="pi pi-times" onClick={this.delete} />
@@ -126,7 +137,11 @@ dialogAlert =()=>{
                      
                         <Dialog visible={this.state.displayDialog} width="300px" header="Car Details" modal={true}  onHide={() => this.setState({ displayDialog: false })}>
                            <p>id: {this.state.id}</p>
-                           <button onClick ={this.dialogAlert}>Edit</button> <button>Delete</button>
+
+                        <Link to = '/records'>
+                        <button onClick ={this.dialogAlert}>Edit</button>
+                        </Link>
+                            <button onClick ={this.handleDelete}>Delete</button>
                          
                         </Dialog>
                       

@@ -40,11 +40,22 @@ function getPatients() {
     })
 }
 
+function idPatient() {
+    return new Promise((resolve, reject)=>{
+        axios.get(`${base}/patient/id`).then(resp => {
+            resolve(resp)
+        }).catch(err => {
+            reject(err)
+        })
+    })
+}
+
 
 export default {
     login,
     register,
     addPatient,
-    getPatients
+    getPatients,
+    idPatient
 
 }
