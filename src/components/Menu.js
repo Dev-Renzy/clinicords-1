@@ -8,13 +8,9 @@ import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import { Dialog } from "primereact/dialog";
 import App from "../styles/App.css";
-import AddPatients from "./AddPatients";
 import req from "../helper/api";
-
 import { BrowserRouter as Router, Switch, Link, Route } from "react-router-dom";
-import Records from "./Records";
 import { Redirect } from "react-router-dom";
-
 export default class Menu extends Component {
   constructor() {
     super();
@@ -177,10 +173,8 @@ export default class Menu extends Component {
                 <br/>
                 <div className="p-grid">
                   <div className="p-col"><Button className="block" onClick={this.dialogAlert} label="Edit" /></div>
-                  <div className="p-col"><Button className="block" onClick={this.handleDelete} label="Delete" /></div>
+                  <div className="p-col"><Button className="block p-button-danger" onClick={this.handleDelete} label="Delete"/></div>
                 </div>
-                {/* <Button className="block" onClick={this.dialogAlert} label="Edit" />
-                <Button className="block" onClick={this.handleDelete} label="Delete" /> */}
               </Dialog>
             </div>
           </Card>

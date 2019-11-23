@@ -58,7 +58,6 @@ export default class Records extends Component {
         { key: "Widowed", text: "Widowed", value: "Widowed" }
       ],
       toHome: false,
-      adding: false,
       updating: false
     };
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -68,9 +67,9 @@ export default class Records extends Component {
     console.log("Current route ", this.props.location.pathname);
     let myroute = this.props.location.pathname;
     if (myroute.includes("addpatient")) {
-      this.setState({ adding: true, updating: false });
+      this.setState({ updating: false });
     } else {
-      this.setState({ adding: false, updating: true });
+      this.setState({ updating: true });
 
       req
         .idPatient(this.props.location.state.id)
@@ -129,14 +128,8 @@ export default class Records extends Component {
         }
       })
       .catch(err => {
-        //   return <SweetAlert
-        //   show={this.state.show}
-        //   title="Demo"
-        //   text="SweetAlert in React"
-        //   onConfirm={() => this.setState({ show: false })}
-        // />
-        console.log(err)
-        alert("All field must be required!!!");
+        console.log(err);
+        alert("Something went Wrong in the network!!!");
       });
   };
   async handleSubmit(e) {
@@ -190,7 +183,7 @@ export default class Records extends Component {
     let showRecord = document.getElementById("ShowMedicalRecords");
     let addNewRecord = document.getElementById("AddingNewRecord");
     showRecord.appendChild(addNewRecord);
-    this.setState({open: false})
+    this.setState({ open: false });
   };
 
   render() {
@@ -250,12 +243,7 @@ export default class Records extends Component {
               </Form>
             </Modal.Content>
             <Modal.Actions>
-              <Button
-                negative
-                onClick={e =>
-                  this.setState({ open: false })
-                }
-              >
+              <Button negative onClick={e => this.setState({ open: false })}>
                 Cancel
               </Button>
               <Button
@@ -298,6 +286,7 @@ export default class Records extends Component {
               <h2> Patient Personal Details</h2>
               <Form.Group widths="equal">
                 <Form.Input
+                  icon="pencil alternate"
                   fluid
                   label="First name"
                   placeholder="First name"
@@ -305,6 +294,7 @@ export default class Records extends Component {
                   onChange={e => this.setState({ fname: e.target.value })}
                 />
                 <Form.Input
+                  icon="pencil alternate"
                   fluid
                   label="Middle name"
                   placeholder="Middle name "
@@ -312,6 +302,7 @@ export default class Records extends Component {
                   onChange={e => this.setState({ mname: e.target.value })}
                 />
                 <Form.Input
+                icon='pencil alternate'
                   fluid
                   label="Last name"
                   placeholder="Last name"
