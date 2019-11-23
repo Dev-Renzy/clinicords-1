@@ -70,6 +70,13 @@ InputText {
 .space{
     margin-left: 20px;
 }
+.dialog{
+    width:50%;
+    text-align: justify !important;
+}
+.block{
+    width: 100%;
+}
 
 
   

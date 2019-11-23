@@ -19,6 +19,7 @@ export default function App() {
           <Route path="/home" component={Menu}/>
           <Route path="/add" component={AddPatients}/>
           <Route path="/records" component={Record}/>
+          <Route path="/addpatient" component={Record}/>
 
           </Switch>
         </div>

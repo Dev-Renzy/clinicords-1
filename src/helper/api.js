@@ -40,9 +40,29 @@ function getPatients() {
     })
 }
 
-function idPatient() {
+function idPatient(id) {
     return new Promise((resolve, reject)=>{
-        axios.get(`${base}/patient/id`).then(resp => {
+        axios.get(`${base}/patient/${id}`).then(resp => {
+            resolve(resp)
+        }).catch(err => {
+            reject(err)
+        })
+    })
+}
+function updatePatient(id,body) {
+    return new Promise((resolve, reject)=>{
+        let url = `${base}/patient/update/${id}`
+        axios.post(url,body).then(resp => {
+            resolve(resp)
+        }).catch(err => {
+            reject(err)
+        })
+    })
+}
+function deletePatient(id) {
+    return new Promise((resolve, reject)=>{
+        let url = `${base}/patient/delete/${id}`
+        axios.post(url).then(resp => {
             resolve(resp)
         }).catch(err => {
             reject(err)
@@ -51,11 +71,14 @@ function idPatient() {
 }
 
 
+
 export default {
     login,
     register,
     addPatient,
     getPatients,
-    idPatient
+    idPatient,
+    updatePatient,
+    deletePatient
 
 }

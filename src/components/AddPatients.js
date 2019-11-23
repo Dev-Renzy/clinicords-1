@@ -6,37 +6,49 @@ import { RadioButton } from "primereact/radiobutton";
 import { Card } from "primereact/card";
 import { Menubar } from "primereact/menubar";
 import { BrowserRouter as Router, Switch, Link, Route } from "react-router-dom";
-import { createPatients } from "../helper/action";
+import { Dropdown } from "primereact/dropdown";
 import req from "../helper/api";
 import { Redirect } from "react-router-dom";
-
+import { withSwalInstance } from "sweetalert2-react";
+import swal from "sweetalert2";
+const SweetAlert = withSwalInstance(swal);
 export default class AddPatients extends Component {
   constructor() {
     super();
     this.state = {
-      fname: "",
-      mname: "",
-      lname: "",
-      sex: "",
-      status: "",
-      age: "",
-      birthdate: "",
-      address: "",
-      email: "",
-      contact: "",
-      emercontfname: "",
-      emercontmname: "",
-      emercontlname: "",
-      emercontnumber: "",
-      emercontaddress: "",
-      emercontemail: "",
-      relationship: "",
+      fname: "Sally",
+      mname: "siya ",
+      lname: "gfjdgfj",
+      sex: "fgjh",
+      status: "gfjghjgh",
+      age: 20,
+      birthdate: "fgjh",
+      address: "fgjhgserdyg",
+      email: "dfffffghgf",
+      contact: 63546456,
+      emercontfname: "dfhdgf",
+      emercontmname: "dfh",
+      emercontlname: "dfghgf",
+      emercontnumber: 6584769102158,
+      emercontaddress: "dfghgd",
+      emercontemail: "dfgh",
+      relationship: "sgfshhfdg",
       toHome: false,
       // size: null,
       full: "input",
       col8: "p-col-8",
       col4: "p-col-4",
-      col1: "p-col-1"
+      col1: "p-col-1",
+      SexOptions: [
+        { label: "Male", value: "Male" },
+        { label: "Female", value: "Female" }
+      ],
+      StatusOptions: [
+        { label: "Single", value: "Single" },
+        { label: "Married", value: "Married" },
+        { label: "Divorced", value: "Divorced" },
+        { label: "Widowed", value: "Widowed" }
+      ]
     };
   }
   handleResized = () => {
@@ -82,14 +94,19 @@ export default class AddPatients extends Component {
     req
       .addPatient(profile)
       .then(resp => {
-        console.log(resp);
         if (resp.status) {
           this.setState({ toHome: true });
         }
       })
       .catch(err => {
-        alert("All field must be required!!!")
-       
+        //   return <SweetAlert
+        //   show={this.state.show}
+        //   title="Demo"
+        //   text="SweetAlert in React"
+        //   onConfirm={() => this.setState({ show: false })}
+        // />
+
+        alert("All field must be required!!!");
       });
   };
   render() {
@@ -242,88 +259,24 @@ export default class AddPatients extends Component {
             </div>
             <br />
             <div className="content-section implementation">
-              <div
-                className="p-grid"
-                style={{ width: "250px", marginBottom: "10px" }}
-              >
-                <div className={this.state.col8}>
-                  Sex :
-                  <RadioButton
-                    inputId="rb1"
-                    name="sex"
-                    value="Male"
-                    onChange={e => this.setState({ sex: e.value })}
-                    checked={this.state.sex === "Male"}
+              <div className="p-grid">
+                <div className="p-col">
+                  <Dropdown
+                    value={this.state.sex}
+                    options={this.state.SexOptions}
+                    onChange={e => this.setState({ sex: e.target.value })}
+                    placeholder="Select Sex"
+                    className = "block"
                   />
-                  <label htmlFor="rb1" className="p-radiobutton-label">
-                    Male
-                  </label>
                 </div>
-                <div className={this.state.col4}>
-                  <RadioButton
-                    inputId="rb2"
-                    name="sex"
-                    value="Female"
-                    onChange={e => this.setState({ sex: e.value })}
-                    checked={this.state.sex === "Female"}
+                <div className="p-col">
+                  <Dropdown
+                    value={this.state.status}
+                    options={this.state.StatusOptions}
+                    onChange={e => this.setState({ status: e.target.value })}
+                    placeholder="Select Status"
+                    className = "block"
                   />
-                  <label htmlFor="rb2" className="p-radiobutton-label">
-                    Female
-                  </label>
-                </div>
-              </div>
-              <div
-                className="p-grid"
-                style={{ width: "250px", marginBottom: "10px" }}
-              >
-                <div className="p-col-3">
-                  Status :
-                  <RadioButton
-                    inputId="rb1"
-                    name="sex"
-                    value="Single"
-                    onChange={e => this.setState({ status: e.value })}
-                    checked={this.state.status === "Single"}
-                  />
-                  <label htmlFor="rb1" className="p-radiobutton-label">
-                    Single
-                  </label>
-                </div>
-                <div className="p-col-3">
-                  <RadioButton
-                    inputId="rb2"
-                    name="sex"
-                    value="Married"
-                    onChange={e => this.setState({ status: e.value })}
-                    checked={this.state.status === "Married"}
-                  />
-                  <label htmlFor="rb2" className="p-radiobutton-label">
-                    Married
-                  </label>
-                </div>
-                <div className="p-col-3">
-                  <RadioButton
-                    inputId="rb2"
-                    name="sex"
-                    value="Divorced"
-                    onChange={e => this.setState({ status: e.value })}
-                    checked={this.state.status === "Divorced"}
-                  />
-                  <label htmlFor="rb2" className="p-radiobutton-label">
-                    Divorced
-                  </label>
-                </div>
-                <div className="p-col-3">
-                  <RadioButton
-                    inputId="rb2"
-                    name="sex"
-                    value="Widowed"
-                    onChange={e => this.setState({ status: e.value })}
-                    checked={this.state.status === "Widowed"}
-                  />
-                  <label htmlFor="rb2" className="p-radiobutton-label">
-                    Widowed
-                  </label>
                 </div>
               </div>
             </div>
@@ -446,6 +399,7 @@ export default class AddPatients extends Component {
               className="p-button-success p-button-size p-button-text"
               onClick={this.createToDB}
             />
+
             {/* </Link> */}
           </div>
         </Card>
