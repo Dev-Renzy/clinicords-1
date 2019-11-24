@@ -69,6 +69,25 @@ function deletePatient(id) {
         })
     })
 }
+//MEdical Records
+function addRecords(body) {
+    return new Promise((resolve, reject)=>{
+        axios.post(`${base}/record/create`, body).then(resp => {
+            resolve(resp)
+        }).catch(err => {
+            reject(err)
+        })
+    })
+}
+function idMedRecords(id) {
+    return new Promise((resolve, reject)=>{
+        axios.get(`${base}/record/${id}`).then(resp => {
+            resolve(resp)
+        }).catch(err => {
+            reject(err)
+        })
+    })
+}
 
 
 
@@ -79,6 +98,8 @@ export default {
     getPatients,
     idPatient,
     updatePatient,
-    deletePatient
+    deletePatient,
+    addRecords,
+    idMedRecords
 
 }

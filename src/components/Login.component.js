@@ -1,17 +1,13 @@
 import React, { useState } from "react";
 import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
-// import "./Login.css";
-import {Link} from 'react-router-dom';
-// import Map from './Map';
+import "./Login.css";
+import { Link } from "react-router-dom";
+import { Card } from "primereact/card";
+import { Input } from "semantic-ui-react";
+//import Map from "./Map";
 import Menu from "./Menu";
 
-
-
 export default function Login(props) {
-  
-    
-    
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -23,41 +19,31 @@ export default function Login(props) {
     event.preventDefault();
   }
 
-
-
-
   return (
     <div className="Login">
-      <form onSubmit={handleSubmit}>
-        <FormGroup controlId="email" bsSize="large">
-          <FormLabel>Email</FormLabel>
-          <FormControl
-            autoFocus
-            type="email"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
+      <Card className="login-card">
+        <div id="logimg">
+          <h1>CliniCords</h1>
+        </div>
+        
+        <div id="log-form">
+          <Input
+            className="inpLogin"
+            icon="mail"
+            size="large"
+            placeholder="Username"
           />
-        </FormGroup>
-        <FormGroup controlId="password" bsSize="large">
-          <FormLabel>Password</FormLabel>
-          <FormControl
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-            type="password"
-          />
-        </FormGroup>
-        {/* <Button block bsSize="large" disabled={!validateForm()} type="submit" >
-          Login */}
-          {/* <Menu/> */}
-           <Link to="/home">
-                  <Button label="Home">
-                    Login
-                  </Button>
+          <br />
+          <br />
+          <Input className="inpLogin" icon="eye" size="large" placeholder="Password" />
+          <br />
+          <br />
+          <Link to="/home">
+            <Button label="Home">Login</Button>
           </Link>
-     
-{/* 
-        </Button> */}
-      </form>
+        </div>
+        
+      </Card>
     </div>
   );
 }

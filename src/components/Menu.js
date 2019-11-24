@@ -10,7 +10,10 @@ import { Dialog } from "primereact/dialog";
 import App from "../styles/App.css";
 import req from "../helper/api";
 import { BrowserRouter as Router, Switch, Link, Route } from "react-router-dom";
+import { Form } from "semantic-ui-react";
 import { Redirect } from "react-router-dom";
+import { CardImg } from "react-bootstrap";
+import Cardimg from "../assets/cardimg.jpg";
 export default class Menu extends Component {
   constructor() {
     super();
@@ -22,7 +25,8 @@ export default class Menu extends Component {
       age: null,
       toRecord: false,
       toAdd: false,
-      edit: false
+      edit: false,
+      selParient: null
     };
 
     this.onPatientSelect = this.onPatientSelect.bind(this);
@@ -42,7 +46,7 @@ export default class Menu extends Component {
             id: datai[i]._id,
             Name: datai[i].fname + " " + datai[i].lname,
             Age: datai[i].age,
-            Date: datai[i].currentdate.toLocaleString()
+            Date: new Date(datai[i].currentdate).toLocaleString()
           };
 
           tempArray.push(myobj);
@@ -69,17 +73,13 @@ export default class Menu extends Component {
     this.setState({ toRecord: true });
   };
 
-  gotoAddPatient=()=>{
+  gotoAddPatient = () => {
     this.setState({ toAdd: true });
-  }
+  };
 
   onClick = () => {
     this.setState({ visible: true });
   };
-  onHide = () => {
-    this.setState({ visible: false });
-  };
-
   async handleDelete(e) {
     await req
       .deletePatient(this.state.id)
@@ -99,15 +99,27 @@ export default class Menu extends Component {
       );
     }
     if (this.state.toAdd === true) {
-      return (
-        <Redirect to={{ pathname: "/addpatient"}} />
-      );
+      return <Redirect to={{ pathname: "/addpatient" }} />;
     }
     let header = (
-      <div className="p-clearfix" style={{ lineHeight: "1.87em" }}>
-        Current Patients{" "}
+      <div>
+        <div  style={{ lineHeight: "1.87em" }}>
+          <h1 className="mydecor">Current Patients</h1>
+        </div>
+        <div>
+          <Form.Input
+            type="search"
+            icon="search"
+            fluid
+            placeholder="Search for patient"
+            value={this.state.fname}
+            onChange={e => this.setState({ globalFilter: e.target.value })}
+            id="input"
+          />
+        </div>
       </div>
     );
+
     return (
       <div>
         <div className="content-section implementation">
@@ -115,14 +127,12 @@ export default class Menu extends Component {
             <Link to="/home">
               <Button label="Home" />
             </Link>
-            
-              <Button
-                label="Add Patient"
-                className="p-button-success"
-                style={{ marginLeft: 4 }}
-                onClick={this.gotoAddPatient}
-              />
-            
+            <Button
+              label="Add Patient"
+              className="p-button-success"
+              style={{ marginLeft: 4 }}
+              onClick={this.gotoAddPatient}
+            />
             <Link to="/">
               <Button
                 label="Logout"
@@ -131,24 +141,16 @@ export default class Menu extends Component {
                 onClick={this.onClick}
               />
             </Link>
-            <InputText
-              placeholder="Search"
-              type="text"
-              style={{ marginLeft: 4 }}
-            />
-            <Button
-              label="Search"
-              icon="pi pi-search"
-              className="p-button-warning"
-              // style={{ marginLeft: 1, color: "black" }}
-            />
           </Menubar>
           <br />
           <Card className="add-card">
             <div className="content-section implementation">
               <DataTable
+                filter={true}
                 value={this.state.patients}
                 header={header}
+                globalFilter={this.state.globalFilter}
+                emptyMessage="No records found"
                 selectionMode="single"
                 selection={this.state.selectedCar}
                 onSelectionChange={e => this.setState({ selectedCar: e.value })}
@@ -170,10 +172,22 @@ export default class Menu extends Component {
                   <h1>Name: {this.state.name}</h1>
                   <h1>age: {this.state.age}</h1>
                 </div>
-                <br/>
+                <br />
                 <div className="p-grid">
-                  <div className="p-col"><Button className="block" onClick={this.dialogAlert} label="Edit" /></div>
-                  <div className="p-col"><Button className="block p-button-danger" onClick={this.handleDelete} label="Delete"/></div>
+                  <div className="p-col">
+                    <Button
+                      className="block"
+                      onClick={this.dialogAlert}
+                      label="Edit"
+                    />
+                  </div>
+                  <div className="p-col">
+                    <Button
+                      className="block p-button-danger"
+                      onClick={this.handleDelete}
+                      label="Delete"
+                    />
+                  </div>
                 </div>
               </Dialog>
             </div>

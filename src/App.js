@@ -7,6 +7,8 @@ import "primeflex/primeflex.css";
 import Menu from "./components/Menu";
 import Login from "./components/Login.component";
 import Record from "./components/Records";
+import AddedRecord from "./components/AddedRecords";
+
 
 import { BrowserRouter as Router,Switch,Link,Route, } from "react-router-dom";
 export default function App() {
@@ -18,6 +20,7 @@ export default function App() {
           <Route path="/home" component={Menu}/>
           <Route path="/records" component={Record}/>
           <Route path="/addpatient" component={Record}/>
+          <Route path="/addrecords" component={AddedRecord}/>
 
           </Switch>
         </div>
