@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import "./Login.css";
 import { Link } from "react-router-dom";
 import { Card } from "primereact/card";
 import { Input } from "semantic-ui-react";
+import 'bootstrap/dist/css/bootstrap.min.css';
 //import Map from "./Map";
 import Menu from "./Menu";
 
@@ -21,29 +22,34 @@ export default function Login(props) {
 
   return (
     <div className="Login">
-      <Card className="login-card">
+      <div className="login-card">
         <div id="logimg">
-          <h1>CliniCords</h1>
+          <h1 id="log-title">CliniCords</h1>
         </div>
-        
-        <div id="log-form">
-          <Input
-            className="inpLogin"
-            icon="mail"
-            size="large"
-            placeholder="Username"
-          />
-          <br />
-          <br />
-          <Input className="inpLogin" icon="eye" size="large" placeholder="Password" />
-          <br />
-          <br />
-          <Link to="/home">
-            <Button label="Home">Login</Button>
-          </Link>
-        </div>
-        
-      </Card>
+        <Card className="tranparent">
+          <div id="log-form">
+            <Input
+              className="inpLogin"
+              icon="mail"
+              size="large"
+              placeholder="Username"
+            />
+            <br />
+            <br />
+            <Input
+              className="inpLogin"
+              icon="eye"
+              size="large"
+              placeholder="Password"
+            />
+            <br />
+            <br />
+            <Link to="/home">
+              <Button id="btnLogin" variant="outline-primary" size="lg" block>LOGIN</Button>
+            </Link>
+          </div>
+        </Card>
+      </div>
     </div>
   );
 }

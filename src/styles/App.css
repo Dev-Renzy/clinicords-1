@@ -129,7 +129,6 @@ InputText {
 }
 .login-card {
   width: 45%;
-  height: 70%;
   margin: auto;
   position: relative;
   top: 50%;
@@ -137,7 +136,7 @@ InputText {
   transform: translateY(-50%);
   background: transparent !important;
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
-  border: solid 1px black;
+  border: solid 0.5px black;
   /* background-image:url('https://onlinenewsguru.com/wp-content/uploads/2019/10/istockphoto-866772230-612x612.jpg' ) */
 }
 #logimg {
@@ -156,4 +155,19 @@ InputText {
 }
 .myinp {
   width: 100%;
+}
+.tranparent {
+  background: transparent !important;
+}
+#log-title {
+  position: relative;
+  top: 10%;
+  font-size: 50px;
+  font-weight: bolder;
+}
+#btnLogin {
+  border: 2px solid;
+  font-size: 30px;
+  letter-spacing: 20px;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
 }
