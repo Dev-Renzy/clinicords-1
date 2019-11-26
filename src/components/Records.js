@@ -1,13 +1,5 @@
 import React, { Component } from "react";
-import {
-  Button,
-  Form,
-  Segment,
-  TextArea,
-  Container,
-  Modal,
-  Card
-} from "semantic-ui-react";
+import {Button,Form,Segment,TextArea,Container,Modal,Card,Icon} from "semantic-ui-react";
 import { Dropdown } from "primereact/dropdown";
 import { Link, Redirect } from "react-router-dom";
 import req from "../helper/api";
@@ -18,23 +10,23 @@ export default class Records extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      fname: "dfghgth",
-      mname: "fds",
-      lname: "fsadf",
-      birthdate: "fsadf",
-      age: 20,
-      sex: "Male",
-      status: "Single",
-      address: "fsdf",
-      email: "fdsf",
-      contact: 21457851,
-      emercontfname: "fsadf",
-      emercontmname: "fsadf",
-      emercontlname: "fsadf",
-      emercontaddress: "fsdf",
-      emercontnumber: 2154587211,
-      emercontemail: "fsadf",
-      relationship: "fsadf",
+      fname: "",
+      mname: "",
+      lname: "",
+      birthdate: "",
+      age: null,
+      sex: "",
+      status: "",
+      address: "",
+      email: "",
+      contact: null,
+      emercontfname: "",
+      emercontmname: "",
+      emercontlname: "",
+      emercontaddress: "",
+      emercontnumber: null,
+      emercontemail: "",
+      relationship: "",
       open: false,
       date: "",
       title: "",
@@ -92,8 +84,7 @@ export default class Records extends Component {
         .catch(err => {
           console.log("error on record");
         });
-    }
-    
+    }  
   }
   createToDB = () => {
     const profile = {
@@ -229,14 +220,13 @@ export default class Records extends Component {
           Add Medical Record
         </Button>
         <div>
-          <Modal size={size} open={open} onClose={this.close}>
+        {/* style={{width:"67%",height:"68%",marginLeft:"16.8%",marginTop:"7%"}} */}
+          <Modal  size={size} open={open} onClose={this.close}>
             <Modal.Header>Add Medical Record </Modal.Header>
             <Modal.Content>
               <Form>
-                <div id="AddingNewRecord">
-                  <p>
-                    <b> New Record:</b>
-                  </p>
+                <div>
+                  <p><b> New Record:</b></p>
                   <p>Date: {this.state.today}</p>
                   <Form.Input
                     fluid
@@ -259,9 +249,9 @@ export default class Records extends Component {
               </Form>
             </Modal.Content>
             <Modal.Actions>
-              <Button negative onClick={e => this.setState({ open: false })}>
-                Cancel
-              </Button>
+              <Button  negative  onClick={e => this.setState({ open: false })}>
+              <Icon name='remove' /> Cancel
+              </Button>  
               <Button
                 positive
                 icon="checkmark"
@@ -272,24 +262,24 @@ export default class Records extends Component {
             </Modal.Actions>
           </Modal>
         </div><br/>
-        <Segment inverted>
-          <Button basic inverted color="teal" onClick={this.handleSubmit}>
+        <Segment id="segment" inverted color='teal'>
+          <Button id = "segment-btn" basic inverted color="teal" onClick={this.handleSubmit}>
             Update
           </Button>
           <Link to="home">
-          <Button basic inverted color="teal" onClick={this.onClick}>
+          <Button id = "segment-btn" basic inverted color="teal" onClick={this.onClick}>
             Cancel
           </Button>
         </Link>
         </Segment><br/>
       </div>
     ) : (
-      <Segment id="segment" inverted>
-        <Button basic inverted color="teal" onClick={this.createToDB}>
+      <Segment id="segment" inverted color='teal'>
+        <Button id = "segment-btn" basic inverted color="teal" onClick={this.createToDB}>
           Add Patient
         </Button>
         <Link to="home">
-          <Button basic inverted color="teal" onClick={this.onClick}>
+          <Button id = "segment-btn" basic inverted color="teal" onClick={this.onClick}>
             Cancel
           </Button>
         </Link>
@@ -363,7 +353,6 @@ export default class Records extends Component {
                     id="input"
                   />
                 </Form.Group>
-
                 <Form.Group widths="equal">
                   <Form.Input
                     fluid
@@ -394,6 +383,7 @@ export default class Records extends Component {
                     onChange={e => this.setState({ sex: e.target.value })}
                     options={this.state.SexOptions}
                   /><br />
+                  
                   <Dropdown
                     placeholder="Select Status"
                     fluid

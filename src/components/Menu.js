@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-// import {Link} from 'react-router-dom';
 import { Menubar } from "primereact/menubar";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
@@ -13,7 +12,7 @@ import { BrowserRouter as Router, Switch, Link, Route } from "react-router-dom";
 import { Form } from "semantic-ui-react";
 import { Redirect } from "react-router-dom";
 import { CardImg } from "react-bootstrap";
-import Cardimg from "../assets/cardimg.jpg";
+import login from "..//assets/logo.png";
 export default class Menu extends Component {
   constructor() {
     super();
@@ -119,11 +118,12 @@ export default class Menu extends Component {
         </div>
       </div>
     );
-
     return (
       <div>
         <div className="content-section implementation">
+        
           <Menubar id="head" model={this.state.items}>
+          <img src={login} width="200" marginLeft="100" height="70"/>
             <Link to="/home">
               <Button label="Home" />
             </Link>
@@ -164,13 +164,13 @@ export default class Menu extends Component {
               <Dialog
                 visible={this.state.displayDialog}
                 className="dialog"
-                header="Patients Action"
+                header="Patients"
                 modal={true}
                 onHide={() => this.setState({ displayDialog: false })}
               >
                 <div>
                   <h1>Name: {this.state.name}</h1>
-                  <h1>age: {this.state.age}</h1>
+                  <h1>Age: {this.state.age}</h1>
                 </div>
                 <br />
                 <div className="p-grid">
