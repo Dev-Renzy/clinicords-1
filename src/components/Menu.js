@@ -25,13 +25,21 @@ export default class Menu extends Component {
       toRecord: false,
       toAdd: false,
       edit: false,
-      selParient: null
+      selParient: null,
+      isAdmin: false
     };
 
     this.onPatientSelect = this.onPatientSelect.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
   }
-  componentDidMount() {
+  componentWillMount() {
+    let isAdmini = localStorage.getItem("isAdmin")
+    console.log("is admin ", isAdmini)
+    if (isAdmini){
+      this.setState({isAdmin: true})
+    }else{
+      this.setState({isAdmin: false})
+    }
     this.getNow();
   }
   getNow = () => {
@@ -95,6 +103,11 @@ export default class Menu extends Component {
     if (this.state.toRecord === true) {
       return (
         <Redirect to={{ pathname: "/records", state: { id: this.state.id } }} />
+      );
+    }
+    if (this.state.isAdmin === true) {
+      return (
+        <Redirect to={{ pathname: "/"}} />
       );
     }
     if (this.state.toAdd === true) {
