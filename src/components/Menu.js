@@ -4,14 +4,12 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Card } from "primereact/card";
 import { Button } from "primereact/button";
-import { InputText } from "primereact/inputtext";
 import { Dialog } from "primereact/dialog";
 import App from "../styles/App.css";
 import req from "../helper/api";
-import { BrowserRouter as Router, Switch, Link, Route } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Form } from "semantic-ui-react";
 import { Redirect } from "react-router-dom";
-import { CardImg } from "react-bootstrap";
 import login from "..//assets/logo.png";
 export default class Menu extends Component {
   constructor() {
@@ -26,19 +24,18 @@ export default class Menu extends Component {
       toAdd: false,
       edit: false,
       selParient: null,
-      isAdmin: false
+      isNotAllowed: false
     };
 
     this.onPatientSelect = this.onPatientSelect.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
   }
   componentWillMount() {
-    let isAdmini = localStorage.getItem("isAdmin")
-    console.log("is admin ", isAdmini)
-    if (isAdmini){
-      this.setState({isAdmin: true})
+    let isAdminLocal = localStorage.getItem("isAdmin")
+    if (isAdminLocal === "false"){
+      this.setState({isNotAllowed: false})
     }else{
-      this.setState({isAdmin: false})
+      this.setState({isNotAllowed: true})
     }
     this.getNow();
   }
@@ -86,6 +83,7 @@ export default class Menu extends Component {
 
   onClick = () => {
     this.setState({ visible: true });
+    localStorage.setItem("isAdmin", null)
   };
   async handleDelete(e) {
     await req
@@ -105,7 +103,7 @@ export default class Menu extends Component {
         <Redirect to={{ pathname: "/records", state: { id: this.state.id } }} />
       );
     }
-    if (this.state.isAdmin === true) {
+    if (this.state.isNotAllowed === true) {
       return (
         <Redirect to={{ pathname: "/"}} />
       );
@@ -136,7 +134,7 @@ export default class Menu extends Component {
         <div className="content-section implementation">
         
           <Menubar id="head" model={this.state.items}>
-          <img src={login} width="200" marginLeft="100" height="70"/>
+          <img src={login} width="200"  height="70"/>
             <Link to="/home">
               <Button label="Home" />
             </Link>

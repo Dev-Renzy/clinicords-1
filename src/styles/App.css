@@ -25,6 +25,15 @@
 .App-link {
   color: #09d3ac;
 }
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 
 #head {
   /* background-image: url("..//assets/logo.png"); */
@@ -193,3 +202,16 @@ InputText {
   height: 70px;
   margin-right: 50%;
 } */
+#card_user{
+  position: relative;
+  width:50%;
+  margin: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+  background-image: url("..//assets/login.jpg");
+  background-size: cover;
+  background-repeat:no-repeat; 
+}
+#input_user{
+  width:100%;
+}

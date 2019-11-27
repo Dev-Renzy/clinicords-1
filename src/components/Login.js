@@ -12,8 +12,8 @@ export default class Login extends Component {
     this.state = {
       hidden: true,
       toHome: false,
+      toAdmin: false,
       eyeIcon: "eye slash",
-
       username: "",
       password: ""
     };
@@ -25,19 +25,20 @@ export default class Login extends Component {
       this.setState({ eyeIcon: "eye slash", hidden: true });
     }
   };
-  handleLogin = () => {
+  handleLogin = (event) => {
+    event.preventDefault();
     var body = { username: this.state.username, password: this.state.password };
     req
       .login(body)
       .then(resp => {
-        console.log(resp);
         if (resp.data.status) {
           if (resp.data.user.isAdmin) {
-            localStorage.setItem("isAdmin", true);
-          }else{
-            localStorage.setItem("isAdmin", false)
+            localStorage.setItem("isAdmin", "true");
+            this.setState({ toAdmin: true });
+          } else {
+            localStorage.setItem("isAdmin", "false");
+            this.setState({ toHome: true });
           }
-          this.setState({ toHome: true });
         } else {
           alert(resp.data.sms);
         }
@@ -51,6 +52,9 @@ export default class Login extends Component {
     if (this.state.toHome) {
       return <Redirect to="/home" />;
     }
+    if (this.state.toAdmin) {
+      return <Redirect to="/admin" />;
+    }
     return (
       <div className="Login">
         <div className="login-card">
@@ -59,41 +63,44 @@ export default class Login extends Component {
           </div>
           <Card className="tranparent">
             <div id="log-form">
-              <Input
-                className="inpLogin"
-                icon="mail"
-                size="large"
-                placeholder="Username"
-                onChange={e => this.setState({ username: e.target.value })}
-              />
-              <br />
-              <br />
-              <Input
-                className="inpLogin"
-                type={this.state.hidden ? "password" : "text"}
-                icon={
-                  <Icon
-                    name={this.state.eyeIcon}
-                    link
-                    onClick={this.handleEyeClick}
-                  />
-                }
-                size="large"
-                placeholder="Password"
-                onChange={e => this.setState({ password: e.target.value })}
-              />
-              <br />
-              <br />
+              <form onSubmit={this.handleLogin}>
+                <Input
+                  className="inpLogin"
+                  icon="mail"
+                  size="large"
+                  placeholder="Username"
+                  onChange={e => this.setState({ username: e.target.value })}
+                />
+                <br />
+                <br />
+                <Input
+                  className="inpLogin"
+                  type={this.state.hidden ? "password" : "text"}
+                  icon={
+                    <Icon
+                      name={this.state.eyeIcon}
+                      link
+                      onClick={this.handleEyeClick}
+                    />
+                  }
+                  size="large"
+                  placeholder="Password"
+                  onChange={e => this.setState({ password: e.target.value })}
+                />
+                <br />
+                <br />
 
-              <Button
-                id="btnLogin"
-                variant="outline-primary"
-                size="lg"
-                block
-                onClick={this.handleLogin}
-              >
-                LOGIN
-              </Button>
+                <Button
+                  id="btnLogin"
+                  variant="outline-primary"
+                  size="lg"
+                  block
+                  onClick={this.handleLogin}
+                  type="submit"
+                >
+                  LOGIN
+                </Button>
+              </form>
             </div>
           </Card>
         </div>
