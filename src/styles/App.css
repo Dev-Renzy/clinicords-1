@@ -34,9 +34,9 @@
   }
 }
 
-
-#head {
-  /* background-image: url("..//assets/logo.png"); */
+ /* background-image: url("..//assets/logo.png"); */
+/* #head {
+ 
   background-color: #09d3ac;
   box-shadow: 1px 5px #888888;
   height: 70px;
@@ -45,7 +45,7 @@
   position: sticky;
   top: 0;
   z-index: 2;
-}
+} */
 
 label {
   margin-left: 130px;
@@ -54,7 +54,7 @@ label {
   width: 100%;
 }
 .p-button-text {
-  color: rgb(7, 7, 7);
+  color: black;
   font-family: cursive;
   -webkit-backdrop-filter: blur();
   -webkit-filter: drop-shadow();
@@ -211,7 +211,16 @@ InputText {
   background-image: url("..//assets/login.jpg");
   background-size: cover;
   background-repeat:no-repeat; 
+  z-index: 2;
 }
 #input_user{
   width:100%;
+}
+.hheader{
+  background-color: rgb(21, 240, 211);
+  box-shadow: 1px 5px #888888;
+  /* padding-top: 3px; */
+  position: sticky;
+  top: 0;
+  z-index: 2;
 }

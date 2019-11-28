@@ -89,6 +89,26 @@ function idMedRecords(id) {
     })
 }
 
+// Users
+function addUser(body) {
+    return new Promise((resolve, reject)=>{
+        axios.post(`${base}/user/create`, body).then(resp => {
+            resolve(resp)
+        }).catch(err => {
+            reject(err)
+        })
+    })
+}
+function allUsers() {
+    return new Promise((resolve, reject)=>{
+        axios.get(`${base}/allusers`).then(resp => {
+            resolve(resp)
+        }).catch(err => {
+            reject(err)
+        })
+    })
+}
+
 
 
 export default {
@@ -100,6 +120,8 @@ export default {
     updatePatient,
     deletePatient,
     addRecords,
-    idMedRecords
+    idMedRecords,
+    addUser,
+    allUsers
 
 }

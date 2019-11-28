@@ -1,27 +1,55 @@
 import React, { Component } from "react";
-import { Link,Redirect } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import logos from "../assets/logo.png";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Card } from "primereact/card";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
+import req from "../helper/api";
 
 export default class Admin extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isNotAllowed: false
+      isNotAllowed: false,
+
     };
   }
   componentWillMount() {
     let isAdminLocal = localStorage.getItem("isAdmin");
     if (isAdminLocal === "true") {
       this.setState({ isNotAllowed: false });
+      this.getNow()
     } else {
       this.setState({ isNotAllowed: true });
     }
+    
   }
+  getNow = () => {
+    req
+      .allUsers()
+      .then(resp => {
+        console.log("All user: ",resp.data.data)
+        // var tempArray = [];
+        // let datai = resp.data.info;
+        // for (let i = 0; i < datai.length; ++i) {
+        //   let myobj = {
+        //     ownerID: datai[i].ownerID,
+        //     date: new Date(datai[i].date).toLocaleString(),
+        //     title: datai[i].title,
+        //     findings: datai[i].findings,
+        //     name: datai[i].pcpName
+        //   };
+
+        //   tempArray.push(myobj);
+        // }
+        // this.setState({ medRecords: tempArray });
+      })
+      .catch(err => {
+        console.log("error on getting records");
+      });
+  };
   render() {
     if (this.state.isNotAllowed === true) {
       return <Redirect to={{ pathname: "/" }} />;
@@ -46,21 +74,12 @@ export default class Admin extends Component {
     );
     return (
       <div>
-        <div className="container">
-          <nav className="navbar navbar-expand-lg navbar-light bg-light">
+          <nav className="navbar navbar-expand-lg navbar-light hheader ">
             <a className="navbar-brand">
               <img src={logos} width="150" height="80" />
             </a>
-            {/* <Link to="/edit" className="navbar-brand">
-              <b>ADMIN</b>
-            </Link> */}
             <div className="collpase nav-collapse">
               <ul className="navbar-nav mr-auto">
-                {/* <li className="navbar-item">
-                  <Link to="/" className="nav-link">
-                    Users
-                  </Link>
-                </li> */}
                 <li className="navbar-item">
                   <Link to="/create" className="nav-link">
                     Create Account
@@ -80,7 +99,7 @@ export default class Admin extends Component {
               </ul>
             </div>
           </nav>
-        </div>
+          <br/><br/>
         <Card className="add-card">
           <div className="content-section implementation">
             <DataTable
@@ -100,14 +119,14 @@ export default class Admin extends Component {
 
             <Dialog
               visible={this.state.displayDialog}
-              className="dialog"
-              header="Patients"
+              className="dialoguser"
+              header="User"
               modal={true}
               onHide={() => this.setState({ displayDialog: false })}
             >
               <div>
                 <h1>Name: {this.state.name}</h1>
-                <h1>Age: {this.state.age}</h1>
+                <h1>Profession: {this.state.age}</h1>
               </div>
               <br />
               <div className="p-grid">

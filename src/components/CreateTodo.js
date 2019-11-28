@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 
 import { Link } from "react-router-dom";
-import { Card, Form,Segment,Button} from "semantic-ui-react";
+import { Card, Form, Segment, Button } from "semantic-ui-react";
+import req from "../helper/api";
 
 export default class CreateTodo extends Component {
   constructor(props) {
@@ -13,38 +14,33 @@ export default class CreateTodo extends Component {
       profession: " ",
       username: "",
       password: "",
+      repeatpass: "",
       todo_completed: false,
       values: []
     };
   }
-  onSubmit(e) {
+  handleSubmit=(e) =>{
     e.preventDefault();
+   
+    if (this.state.password === this.state.repeatpass) {
+      let user = {
+        isAdmin: false,
+        username: this.state.username,
+        password: this.state.password,
+        firstname: this.state.firstName,
+        middlename: this.state.middleName,
+        lastname: this.state.lastName,
+        profession: this.state.profession
+      };
+      req.addUser(user).then(resp=>{
+        console.log(resp)
+      }).catch(err=>{
+        console.log(err)
+      })
+    }else{
+      alert("sayop!!")
+    }
 
-    const {
-      firstName,
-      middleName,
-      lastName,
-      profession,
-      username,
-      password
-    } = this.state;
-    let list = [];
-    list.push(firstName);
-    list.push(middleName);
-    list.push(lastName);
-    list.push(profession);
-    list.push(username);
-    list.push(password);
-    this.setState({
-      firstName: "",
-      middleName: "",
-      lastName: "",
-      profession: "",
-      todo_responsible: "",
-      username: "",
-      password: "",
-      values: list
-    });
   }
 
   render() {
@@ -100,6 +96,13 @@ export default class CreateTodo extends Component {
                   placeholder="password"
                   onChange={e => this.setState({ password: e.target.value })}
                 />
+                <Form.Input
+                  fluid
+                  type="password"
+                  label="Repeat Password"
+                  placeholder="repeat password"
+                  onChange={e => this.setState({ repeatpass: e.target.value })}
+                />
                 <br />
                 <Segment id="segment" inverted color="teal">
                   <Button
@@ -109,18 +112,18 @@ export default class CreateTodo extends Component {
                     color="teal"
                     onClick={this.handleSubmit}
                   >
-                    Update
+                    Add User
                   </Button>
-                    <Link to ='/'>
-                  <Button
-                    id="segment-btn"
-                    basic
-                    inverted
-                    color="teal"
-                    onClick={this.onClick}
-                  >
-                    Cancel
-                  </Button>
+                  <Link to="/">
+                    <Button
+                      id="segment-btn"
+                      basic
+                      inverted
+                      color="teal"
+                      onClick={this.onClick}
+                    >
+                      Cancel
+                    </Button>
                   </Link>
                 </Segment>
                 <br />

@@ -8,9 +8,9 @@ import { Dialog } from "primereact/dialog";
 import App from "../styles/App.css";
 import req from "../helper/api";
 import { Link } from "react-router-dom";
-import { Form } from "semantic-ui-react";
+import { Form, Segment } from "semantic-ui-react";
 import { Redirect } from "react-router-dom";
-import login from "..//assets/logo.png";
+import logo from "..//assets/logo.png";
 export default class Menu extends Component {
   constructor() {
     super();
@@ -31,11 +31,11 @@ export default class Menu extends Component {
     this.handleDelete = this.handleDelete.bind(this);
   }
   componentWillMount() {
-    let isAdminLocal = localStorage.getItem("isAdmin")
-    if (isAdminLocal === "false"){
-      this.setState({isNotAllowed: false})
-    }else{
-      this.setState({isNotAllowed: true})
+    let isAdminLocal = localStorage.getItem("isAdmin");
+    if (isAdminLocal === "false") {
+      this.setState({ isNotAllowed: false });
+    } else {
+      this.setState({ isNotAllowed: true });
     }
     this.getNow();
   }
@@ -83,7 +83,7 @@ export default class Menu extends Component {
 
   onClick = () => {
     this.setState({ visible: true });
-    localStorage.setItem("isAdmin", null)
+    localStorage.setItem("isAdmin", null);
   };
   async handleDelete(e) {
     await req
@@ -104,16 +104,14 @@ export default class Menu extends Component {
       );
     }
     if (this.state.isNotAllowed === true) {
-      return (
-        <Redirect to={{ pathname: "/"}} />
-      );
+      return <Redirect to={{ pathname: "/" }} />;
     }
     if (this.state.toAdd === true) {
       return <Redirect to={{ pathname: "/addpatient" }} />;
     }
     let header = (
       <div>
-        <div  style={{ lineHeight: "1.87em" }}>
+        <div style={{ lineHeight: "1.87em" }}>
           <h1 className="mydecor">Current Patients</h1>
         </div>
         <div>
@@ -131,80 +129,111 @@ export default class Menu extends Component {
     );
     return (
       <div>
-        <div className="content-section implementation">
-        
-          <Menubar id="head" model={this.state.items}>
-          <img src={login} width="200"  height="70"/>
-            <Link to="/home">
-              <Button label="Home" />
-            </Link>
+        {/* <div className="content-section implementation"> */}
+
+        {/* <Menubar id="head" model={this.state.items}>
+          <img src={login} width="200"  height="70"/> */}
+        <nav className="navbar navbar-expand-lg navbar-light hheader ">
+          <a className="navbar-brand">
+            <img src={logo} width="150" height="80" />
+          </a>
+          <div className="collpase nav-collapse">
+            <ul className="navbar-nav mr-auto">
+              <li>
+                {/* <div className="form-group"> */}
+               
+                  <Link to="/home">
+                    <Button label="Home" />
+                  </Link>
+                  <Button
+                    label="Add Patient"
+                    className="p-button-success"
+                    style={{ marginLeft: 4 }}
+                    onClick={this.gotoAddPatient}
+                  />
+                  <Link to="/">
+                    <Button
+                      label="Logout"
+                      className="p-button-success"
+                      style={{ marginLeft: 4 }}
+                      onClick={this.onClick}
+                    />
+                  </Link>
+                {/* </div> */}
+              </li>
+            </ul>
+          </div>
+          {/* <Link to="/home">
+            <Button label="Home" />
+          </Link>
+          <Button
+            label="Add Patient"
+            className="p-button-success"
+            style={{ marginLeft: 4 }}
+            onClick={this.gotoAddPatient}
+          />
+          <Link to="/">
             <Button
-              label="Add Patient"
+              label="Logout"
               className="p-button-success"
               style={{ marginLeft: 4 }}
-              onClick={this.gotoAddPatient}
+              onClick={this.onClick}
             />
-            <Link to="/">
-              <Button
-                label="Logout"
-                className="p-button-success"
-                style={{ marginLeft: 4 }}
-                onClick={this.onClick}
-              />
-            </Link>
-          </Menubar>
-          <br />
-          <Card className="add-card">
-            <div className="content-section implementation">
-              <DataTable
-                filter={true}
-                value={this.state.patients}
-                header={header}
-                globalFilter={this.state.globalFilter}
-                emptyMessage="No records found"
-                selectionMode="single"
-                selection={this.state.selectedCar}
-                onSelectionChange={e => this.setState({ selectedCar: e.value })}
-                onRowSelect={this.onPatientSelect}
-              >
-                <Column field="Name" header="Name" />
-                <Column field="Age" header="Age" />
-                <Column field="Date" header="Date" />
-              </DataTable>
+          </Link> */}
+        </nav>
+        {/* </Menubar> */}
+        <br />
+        <Card className="add-card">
+          <div className="content-section implementation">
+            <DataTable
+              filter={true}
+              value={this.state.patients}
+              header={header}
+              globalFilter={this.state.globalFilter}
+              emptyMessage="No records found"
+              selectionMode="single"
+              selection={this.state.selectedCar}
+              onSelectionChange={e => this.setState({ selectedCar: e.value })}
+              onRowSelect={this.onPatientSelect}
+            >
+              <Column field="Name" header="Name" />
+              <Column field="Age" header="Age" />
+              <Column field="Date" header="Date" />
+            </DataTable>
 
-              <Dialog
-                visible={this.state.displayDialog}
-                className="dialog"
-                header="Patients"
-                modal={true}
-                onHide={() => this.setState({ displayDialog: false })}
-              >
-                <div>
-                  <h1>Name: {this.state.name}</h1>
-                  <h1>Age: {this.state.age}</h1>
+            <Dialog
+              visible={this.state.displayDialog}
+              className="dialog"
+              header="Patients"
+              modal={true}
+              onHide={() => this.setState({ displayDialog: false })}
+            >
+              <div>
+                <h1>Name: {this.state.name}</h1>
+                <h1>Age: {this.state.age}</h1>
+              </div>
+              <br />
+              <div className="p-grid">
+                <div className="p-col">
+                  <Button
+                    className="block"
+                    onClick={this.dialogAlert}
+                    label="Edit"
+                  />
                 </div>
-                <br />
-                <div className="p-grid">
-                  <div className="p-col">
-                    <Button
-                      className="block"
-                      onClick={this.dialogAlert}
-                      label="Edit"
-                    />
-                  </div>
-                  <div className="p-col">
-                    <Button
-                      className="block p-button-danger"
-                      onClick={this.handleDelete}
-                      label="Delete"
-                    />
-                  </div>
+                <div className="p-col">
+                  <Button
+                    className="block p-button-danger"
+                    onClick={this.handleDelete}
+                    label="Delete"
+                  />
                 </div>
-              </Dialog>
-            </div>
-          </Card>
-        </div>
+              </div>
+            </Dialog>
+          </div>
+        </Card>
       </div>
+      // </div>
     );
   }
 }
