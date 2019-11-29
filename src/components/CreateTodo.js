@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { Link } from "react-router-dom";
+import { Redirect,Link } from "react-router-dom";
 import { Card, Form, Segment, Button } from "semantic-ui-react";
 import req from "../helper/api";
 
@@ -8,42 +8,50 @@ export default class CreateTodo extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstName: "",
-      middleName: " ",
-      lastName: " ",
+      firstname: "",
+      middlename: " ",
+      lastname: " ",
       profession: " ",
       username: "",
       password: "",
       repeatpass: "",
       todo_completed: false,
-      values: []
+      values: [],
+      toAdminHome: false
     };
   }
-  handleSubmit=(e) =>{
+  handleSubmit = (e) => {
     e.preventDefault();
-   
     if (this.state.password === this.state.repeatpass) {
       let user = {
         isAdmin: false,
         username: this.state.username,
         password: this.state.password,
-        firstname: this.state.firstName,
-        middlename: this.state.middleName,
-        lastname: this.state.lastName,
+        firstname: this.state.firstname,
+        middlename: this.state.middlename,
+        lastname: this.state.lastname,
         profession: this.state.profession
       };
-      req.addUser(user).then(resp=>{
+      req.addUser(user).then(resp => {
         console.log(resp)
-      }).catch(err=>{
+        this.setState({ toAdminHome: true })
+      }).catch(err => {
         console.log(err)
       })
-    }else{
+    } else {
       alert("sayop!!")
     }
 
   }
+  handleCancel = () => {
+    this.setState({ visible: true });
+    
+  }
 
   render() {
+    if (this.state.toAdminHome == true) {
+      return <Redirect to="/admin" />
+    }
     return (
       <div>
         <br />
@@ -53,26 +61,25 @@ export default class CreateTodo extends Component {
             <Form>
               <div>
                 <h1>Create Users</h1>
-
                 <Form.Input
                   fluid
                   label="First Name "
                   placeholder="firstname"
-                  onChange={e => this.setState({ firstName: e.target.value })}
+                  onChange={e => this.setState({ firstname: e.target.value })}
                 />
                 <br />
                 <Form.Input
                   fluid
                   label="Middle Name "
                   placeholder="middlename"
-                  onChange={e => this.setState({ middleName: e.target.value })}
+                  onChange={e => this.setState({ middlename: e.target.value })}
                 />
                 <br />
                 <Form.Input
                   fluid
                   label="Last Name "
                   placeholder="lastname"
-                  onChange={e => this.setState({ lastName: e.target.value })}
+                  onChange={e => this.setState({ lastname: e.target.value })}
                 />
                 <br />
                 <Form.Input
@@ -104,26 +111,14 @@ export default class CreateTodo extends Component {
                   onChange={e => this.setState({ repeatpass: e.target.value })}
                 />
                 <br />
-                <Segment id="segment" inverted color="teal">
-                  <Button
-                    id="segment-btn"
-                    basic
-                    inverted
-                    color="teal"
-                    onClick={this.handleSubmit}
-                  >
-                    Add User
+                <Segment id="segment" inverted color='teal'>
+                  <Button id="segment-btn" basic inverted color="teal" onClick={this.handleSubmit}>
+                    Update
                   </Button>
-                  <Link to="/">
-                    <Button
-                      id="segment-btn"
-                      basic
-                      inverted
-                      color="teal"
-                      onClick={this.onClick}
-                    >
+                  <Link to="admin">
+                    <Button id="segment-btn" basic inverted color="teal" onClick={this.handleCancel}>
                       Cancel
-                    </Button>
+                  </Button>
                   </Link>
                 </Segment>
                 <br />

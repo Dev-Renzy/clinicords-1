@@ -192,8 +192,6 @@ export default class Menu extends Component {
               globalFilter={this.state.globalFilter}
               emptyMessage="No records found"
               selectionMode="single"
-              selection={this.state.selectedCar}
-              onSelectionChange={e => this.setState({ selectedCar: e.value })}
               onRowSelect={this.onPatientSelect}
             >
               <Column field="Name" header="Name" />

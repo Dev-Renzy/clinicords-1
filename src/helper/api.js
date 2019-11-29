@@ -99,9 +99,9 @@ function addUser(body) {
         })
     })
 }
-function allUsers() {
+function getUsers() {
     return new Promise((resolve, reject)=>{
-        axios.get(`${base}/allusers`).then(resp => {
+        axios.get(`${base}/getusers`).then(resp => {
             resolve(resp)
         }).catch(err => {
             reject(err)
@@ -122,6 +122,6 @@ export default {
     addRecords,
     idMedRecords,
     addUser,
-    allUsers
+    getUsers
 
 }

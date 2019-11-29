@@ -12,7 +12,13 @@ export default class Admin extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      users:[],
       isNotAllowed: false,
+      id:null,
+      fullname:null,
+      profession:null,
+      
+      
 
     };
   }
@@ -20,34 +26,39 @@ export default class Admin extends Component {
     let isAdminLocal = localStorage.getItem("isAdmin");
     if (isAdminLocal === "true") {
       this.setState({ isNotAllowed: false });
-      this.getNow()
+      
     } else {
       this.setState({ isNotAllowed: true });
     }
-    
+    this.getNow()
   }
   getNow = () => {
     req
-      .allUsers()
+      .getUsers()
       .then(resp => {
-        console.log("All user: ",resp.data.data)
-        // var tempArray = [];
-        // let datai = resp.data.info;
-        // for (let i = 0; i < datai.length; ++i) {
-        //   let myobj = {
-        //     ownerID: datai[i].ownerID,
-        //     date: new Date(datai[i].date).toLocaleString(),
-        //     title: datai[i].title,
-        //     findings: datai[i].findings,
-        //     name: datai[i].pcpName
-        //   };
+        var tempArray = [];
+        let datai = resp.data.data;
+        for (let i = 0; i < datai.length; ++i) {
+          
+          if(i>1){
 
-        //   tempArray.push(myobj);
-        // }
-        // this.setState({ medRecords: tempArray });
+         
+          let myobj = {
+            id: datai[i]._id,
+            
+            fullname: datai[i].firstname + " " + datai[i].lastname,
+            profession: datai[i].profession,
+          }
+          tempArray.push(myobj);
+          
+        }
+        }
+        this.setState({ users: tempArray });
+        console.log("array ", this.state.users)
+           
       })
       .catch(err => {
-        console.log("error on getting records");
+        console.log("error on getting records",err);
       });
   };
   render() {
@@ -104,17 +115,15 @@ export default class Admin extends Component {
           <div className="content-section implementation">
             <DataTable
               filter={true}
-              value={this.state.patients}
+              value={this.state.users}
               header={header}
               globalFilter={this.state.globalFilter}
               emptyMessage="No records found"
               selectionMode="single"
-              selection={this.state.selectedCar}
-              onSelectionChange={e => this.setState({ selectedCar: e.value })}
               onRowSelect={this.onPatientSelect}
             >
-              <Column field="Name" header="Fullname" />
-              <Column field="Age" header="Profession" />
+              <Column field="fullname" header="Fullname" />
+              <Column field="profession" header="Profession" />
             </DataTable>
 
             <Dialog
