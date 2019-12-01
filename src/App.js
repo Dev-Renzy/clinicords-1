@@ -24,10 +24,10 @@ export default function App() {
           <Route path="/records" component={Record}/>
           <Route path="/addpatient" component={Record}/>
           <Route path="/addrecords" component={AddedRecord}/>
-          {/* <Route path="/admin" component={Admin}/> */}
           <Route path="/admin" exact component={Admin} />
             <Route path="/edit" component={EditTodo} />
             <Route path="/create" component={CreateTodo} />
+            <Route path="/updateuser" component={CreateTodo} />
           </Switch>
         </div>
       </Router>  

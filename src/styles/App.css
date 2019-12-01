@@ -118,6 +118,10 @@ InputText {
   font-family: fantasy;
   font-size: 50px;
 }
+#infouser {
+  font-family: fantasy;
+  font-size: 50px;
+}
 #segment {
   border-radius: 0px;
   background-color: 1px 5px #09d3ac;
@@ -223,4 +227,13 @@ InputText {
   position: sticky;
   top: 0;
   z-index: 2;
+}
+.red{
+  color: red;
+}
+#reminder {
+  position: relative;
+  margin-top:20%;
+  margin-left: 50%;
+  text-align: center;
 }

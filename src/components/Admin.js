@@ -17,10 +17,14 @@ export default class Admin extends Component {
       id:null,
       fullname:null,
       profession:null,
+      toUpdate:false,
+      toAddUser:false
       
       
 
     };
+    this.onUserSelect = this.onUserSelect.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
   componentWillMount() {
     let isAdminLocal = localStorage.getItem("isAdmin");
@@ -45,7 +49,6 @@ export default class Admin extends Component {
          
           let myobj = {
             id: datai[i]._id,
-            
             fullname: datai[i].firstname + " " + datai[i].lastname,
             profession: datai[i].profession,
           }
@@ -61,9 +64,42 @@ export default class Admin extends Component {
         console.log("error on getting records",err);
       });
   };
+  userEdit =()=>{
+    this.setState({toUpdate:true})
+  }
+  userAdd =()=>{
+    this.setState({toAddUser:true})
+  }
+  async onUserSelect(e) {
+    await this.setState({
+      displayDialog: true,
+      id: e.data.id,
+      fullname: e.data.fullname,
+      profession: e.data.profession
+    });
+  }
+
+  async handleDelete(e) {
+    await req
+      .deleteUser(this.state.id)
+      .then(resp => {
+        this.getNow(); //request again
+        this.setState({ displayDialog: false });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+  
   render() {
     if (this.state.isNotAllowed === true) {
       return <Redirect to={{ pathname: "/" }} />;
+    }
+    if(this.state.toUpdate===true){
+      return <Redirect to={{pathname:"/updateuser",state:{id:this.state.id}}} />
+    }
+    if (this.state.toAddUser === true) {
+      return <Redirect to={{ pathname: "/create" }} />;
     }
     let header = (
       <div>
@@ -76,7 +112,7 @@ export default class Admin extends Component {
                   icon="search"
                   fluid
                   placeholder="Search for patient"
-                  value={this.state.fname}
+                  value={this.state.firstname}
                   onChange={e => this.setState({ globalFilter: e.target.value })}
                   id="input"
                 /> */}
@@ -91,11 +127,17 @@ export default class Admin extends Component {
             </a>
             <div className="collpase nav-collapse">
               <ul className="navbar-nav mr-auto">
-                <li className="navbar-item">
+                {/* <li className="navbar-item">
                   <Link to="/create" className="nav-link">
                     Create Account
                   </Link>
-                </li>
+                </li> */}
+                <Button
+                    label="Add User"
+                    className="p-button-success"
+                    style={{ marginLeft: 4 }}
+                    onClick={this.userAdd}
+                  />
                 <li>
                   <div className="form-group">
                     <Link to="/">
@@ -120,7 +162,7 @@ export default class Admin extends Component {
               globalFilter={this.state.globalFilter}
               emptyMessage="No records found"
               selectionMode="single"
-              onRowSelect={this.onPatientSelect}
+              onRowSelect={this.onUserSelect}
             >
               <Column field="fullname" header="Fullname" />
               <Column field="profession" header="Profession" />
@@ -134,15 +176,15 @@ export default class Admin extends Component {
               onHide={() => this.setState({ displayDialog: false })}
             >
               <div>
-                <h1>Name: {this.state.name}</h1>
-                <h1>Profession: {this.state.age}</h1>
+                <h1>Name: {this.state.fullname}</h1>
+                <h1>Profession: {this.state.profession}</h1>
               </div>
               <br />
               <div className="p-grid">
                 <div className="p-col">
                   <Button
                     className="block"
-                    onClick={this.dialogAlert}
+                    onClick={this.userEdit}
                     label="Edit"
                   />
                 </div>

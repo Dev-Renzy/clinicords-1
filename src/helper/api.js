@@ -21,6 +21,17 @@ function login(body) {
     })
 }
 
+function updatePass(id, body) {
+    return new Promise((resolve, reject)=>{
+        axios.post(`${base}/updatePassword/${id}`, body).then(resp => {
+            resolve(resp)
+        }).catch(err => {
+            reject(err)
+        })
+    })
+}
+// patients
+
 function addPatient(body) {
     return new Promise((resolve, reject)=>{
         axios.post(`${base}/patient/create`, body).then(resp => {
@@ -110,6 +121,39 @@ function getUsers() {
 }
 
 
+function idUsers(id) {
+    return new Promise((resolve, reject)=>{
+        axios.get(`${base}/users/${id}`).then(resp => {
+            resolve(resp)
+        }).catch(err => {
+            reject(err)
+        })
+    })
+}
+
+function updateUsers(id,body) {
+    return new Promise((resolve, reject)=>{
+        let url = `${base}/user/update/${id}`
+        axios.post(url,body).then(resp => {
+            resolve(resp)
+        }).catch(err => {
+            reject(err)
+        })
+    })
+}
+function deleteUser(id) {
+    return new Promise((resolve, reject)=>{
+        let url = `${base}/user/delete/${id}`
+        axios.post(url).then(resp => {
+            resolve(resp)
+        }).catch(err => {
+            reject(err)
+        })
+    })
+}
+
+
+
 
 export default {
     login,
@@ -122,6 +166,10 @@ export default {
     addRecords,
     idMedRecords,
     addUser,
-    getUsers
+    getUsers,
+    updateUsers,
+    idUsers,
+    deleteUser,
+    updatePass
 
 }
